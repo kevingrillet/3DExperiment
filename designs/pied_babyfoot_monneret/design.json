@@ -1,0 +1,75 @@
+{
+  "id": "pied_babyfoot_monneret",
+  "title": "Pied baby-foot Monneret",
+  "subtitle": { "fr": "Patin / sabot de pied", "en": "Foot pad / cap" },
+  "description": {
+    "fr": "Coin plein qui coiffe le pied bois du baby-foot : le bois se loge dans un creux sur la face inclinée du dessus, et une vis le fixe (insérée par le dessous). Reconstruit d'après le plan coté et la pièce réelle.",
+    "en": "Solid wedge that caps the wooden foosball-table leg: the wood sits in a recess on the angled top face, and a screw secures it (inserted from underneath). Rebuilt from the dimensioned drawing and the actual part."
+  },
+  "tags": [
+    { "fr": "babyfoot", "en": "foosball" },
+    { "fr": "réparation", "en": "repair" },
+    { "fr": "patin", "en": "pad" },
+    "OpenSCAD"
+  ],
+  "model": "model.scad",
+  "blueprint": "blueprint.mjs",
+  "dimensions": [
+    { "label": { "fr": "Longueur totale", "en": "Overall length" }, "value": "101 mm" },
+    { "label": { "fr": "Largeur", "en": "Width" }, "value": "28 mm" },
+    {
+      "label": { "fr": "Hauteur (épais → fin)", "en": "Height (thick → thin)" },
+      "value": "35 → 6 mm"
+    },
+    {
+      "label": { "fr": "Creux (toit incliné)", "en": "Recess (angled roof)" },
+      "value": {
+        "fr": "prof. 5 mm ⊥ toit, bordure 2 mm (≈ 97 × 24)",
+        "en": "depth 5 mm ⊥ roof, 2 mm border (≈ 97 × 24)"
+      }
+    },
+    {
+      "label": { "fr": "Perçage (vis)", "en": "Drilling (screw)" },
+      "value": {
+        "fr": "Ø5 sur 10 mm → épaulement → Ø10 traversant",
+        "en": "Ø5 over 10 mm → shoulder → Ø10 through"
+      }
+    },
+    { "label": { "fr": "Arrondis extérieurs", "en": "Outer fillets" }, "value": "R2" },
+    {
+      "label": { "fr": "Tolérance générale", "en": "General tolerance" },
+      "value": { "fr": "±0,5 mm", "en": "±0.5 mm" }
+    }
+  ],
+  "printing": [
+    {
+      "label": { "fr": "Matière", "en": "Material" },
+      "value": { "fr": "PETG ou Nylon (PA)", "en": "PETG or Nylon (PA)" }
+    },
+    {
+      "label": { "fr": "Remplissage", "en": "Infill" },
+      "value": { "fr": "40 % minimum", "en": "40% minimum" }
+    },
+    {
+      "label": { "fr": "Orientation", "en": "Orientation" },
+      "value": {
+        "fr": "dessous (face plate) sur le plateau",
+        "en": "underside (flat face) on the bed"
+      }
+    }
+  ],
+  "photos": [
+    {
+      "file": "src/IMG-20260624-WA0000.jpg",
+      "caption": { "fr": "Plan coté d'origine", "en": "Original dimensioned drawing" }
+    },
+    {
+      "file": "src/IMG-20260624-WA0005.jpg",
+      "caption": { "fr": "Pièce réelle", "en": "Actual part" }
+    },
+    {
+      "file": "src/IMG-20260624-WA0006.jpg",
+      "caption": { "fr": "Pièce réelle (autre angle)", "en": "Actual part (other angle)" }
+    }
+  ]
+}

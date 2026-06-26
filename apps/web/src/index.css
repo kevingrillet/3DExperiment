@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+
+/* Variante `dark` pilotée par la classe `.dark` sur <html> (et non par la media
+   query système), pour permettre une bascule manuelle au runtime. */
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens de thème (Tailwind v4 : configuration CSS-first).
+   `inline` : les utilitaires (bg-canvas, text-fg…) RÉFÉRENCENT ces variables au
+   lieu d'en copier la valeur — indispensable car les valeurs réelles sont fournies
+   plus bas par `:root` / `.dark` et changent au runtime. */
+@theme inline {
+  --color-canvas: var(--color-canvas);
+  --color-surface: var(--color-surface);
+  --color-subtle: var(--color-subtle);
+  --color-line: var(--color-line);
+
+  --color-fg: var(--color-fg);
+  --color-fg-strong: var(--color-fg-strong);
+  --color-muted: var(--color-muted);
+  --color-faint: var(--color-faint);
+
+  --color-ink: var(--color-ink);
+  --color-accent: var(--color-accent);
+
+  /* Coloration syntaxique du code (viewer OpenSCAD). */
+  --color-code: var(--color-code);
+  --color-scad-fg: var(--color-scad-fg);
+  --color-scad-gutter: var(--color-scad-gutter);
+  --color-scad-comment: var(--color-scad-comment);
+  --color-scad-string: var(--color-scad-string);
+  --color-scad-number: var(--color-scad-number);
+  --color-scad-keyword: var(--color-scad-keyword);
+  --color-scad-builtin: var(--color-scad-builtin);
+  --color-scad-special: var(--color-scad-special);
+  --color-scad-function: var(--color-scad-function);
+  --color-scad-punct: var(--color-scad-punct);
+
+  --font-sans: 'Segoe UI', system-ui, Arial, sans-serif;
+}
+
+/* ===========================================================================
+   THÈMES — design tokens (variables CSS)
+   --------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+  --color-canvas: #f8fafc;
+  --color-surface: #ffffff;
+  --color-subtle: #f1f5f9;
+  --color-line: #e2e8f0;
+
+  --color-fg: #1e293b;
+  --color-fg-strong: #0f172a;
+  --color-muted: #64748b;
+  --color-faint: #94a3b8;
+
+  --color-ink: #1330a0;
+  --color-accent: #1330a0;
+
+  --color-code: #f8fafc;
+  --color-scad-fg: #334155;
+  --color-scad-gutter: #94a3b8;
+  --color-scad-comment: #64748b;
+  --color-scad-string: #16a34a;
+  --color-scad-number: #ea580c;
+  --color-scad-keyword: #7c3aed;
+  --color-scad-builtin: #2563eb;
+  --color-scad-special: #db2777;
+  --color-scad-function: #0891b2;
+  --color-scad-punct: #64748b;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-canvas: #0b1120;
+  --color-surface: #111c2e;
+  --color-subtle: #1e293b;
+  --color-line: #243049;
+
+  --color-fg: #e2e8f0;
+  --color-fg-strong: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  --color-ink: #9db8ff;
+  --color-accent: #3b5bdb;
+
+  --color-code: #0d1526;
+  --color-scad-fg: #cbd5e1;
+  --color-scad-gutter: #475569;
+  --color-scad-comment: #6b7f99;
+  --color-scad-string: #86efac;
+  --color-scad-number: #fdba74;
+  --color-scad-keyword: #c4b5fd;
+  --color-scad-builtin: #7db1ff;
+  --color-scad-special: #f9a8d4;
+  --color-scad-function: #67e8f9;
+  --color-scad-punct: #94a3b8;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Pendant la bascule clair/sombre, on coupe TOUTES les transitions le temps d'une
+   frame : sans ça, le fond (sans transition) change instantanément tandis que les
+   éléments avec `transition` « traînent » — effet désynchronisé. Ajoutée puis
+   retirée par le ThemeProvider. */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}

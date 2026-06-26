@@ -1,0 +1,50 @@
+{
+  "name": "3dexperiment",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Partage de pièces 3D imprimables : blueprint coté + viewer 3D interactif. Monorepo (designs OpenSCAD + app web React).",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @3dexperiment/web",
+    "build": "npm run build:designs && npm run build:web",
+    "build:designs": "npm run build --workspace @3dexperiment/generator",
+    "build:web": "npm run build --workspace @3dexperiment/web",
+    "preview": "npm run preview --workspace @3dexperiment/web",
+    "test": "npm run test --workspace @3dexperiment/web",
+    "test:watch": "npm run test:watch --workspace @3dexperiment/web",
+    "test:cov": "npm run test:cov --workspace @3dexperiment/web",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "typecheck": "npm run typecheck --workspace @3dexperiment/web",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "storybook": "npm run storybook --workspace @3dexperiment/web",
+    "build-storybook": "npm run build-storybook --workspace @3dexperiment/web",
+    "clean": "node scripts/clean.mjs",
+    "clean:all": "node scripts/clean.mjs --all",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "eslint-plugin-storybook": "^10.4.6",
+    "globals": "^17.7.0",
+    "prettier": "^3.8.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

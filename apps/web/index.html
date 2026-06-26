@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3DExperiment — pièces 3D partagées</title>
+    <meta
+      name="description"
+      content="Catalogue de pièces 3D imprimables : blueprint coté et viewer 3D interactif."
+    />
+    <!-- Applique le thème AVANT le premier rendu pour éviter le flash clair→sombre. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {
+          /* localStorage indisponible : on reste en thème clair par défaut. */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
