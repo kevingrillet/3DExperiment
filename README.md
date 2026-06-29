@@ -7,7 +7,7 @@ GitHub Pages.
 > Aujourd'hui une seule pièce (le patin de pied de baby-foot Monneret), mais l'architecture
 > est prévue pour en accueillir d'autres : il suffit d'ajouter un dossier dans `designs/`.
 
-## Architecture (monorepo npm workspaces)
+## Architecture (paquet npm unique)
 
 ```
 3DExperiment/
@@ -17,8 +17,9 @@ GitHub Pages.
 │       ├── design.json           # métadonnées (titre, cotes, réglages d'impression…)
 │       ├── blueprint.mjs          # dessin technique coté (spécifique à la pièce) -> SVG
 │       └── src/                  # plan d'origine + photos
-├── packages/generator/           # outils GÉNÉRIQUES (scad -> STL, catalogue, orchestration)
-├── apps/web/                     # app React + Vite + Tailwind + react-three-fiber
+├── scripts/generator/            # génération GÉNÉRIQUE (scad -> STL, blueprint, catalogue)
+├── src/                          # app React + Vite + Tailwind + react-three-fiber
+├── public/                       # sortie générée (designs/, catalog.json) — gitignorée
 └── .github/workflows/            # CI (qualité) + déploiement Pages
 ```
 
@@ -40,25 +41,24 @@ Node ≥ 24 (voir `.nvmrc`). Aucune installation système (OpenSCAD tourne en We
 npm install
 ```
 
-## Commandes (toutes à la racine)
+## Commandes
 
-| Commande                                | Effet                                                                   |
-| --------------------------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`                           | Serveur de dev Vite (app web)                                           |
-| `npm run build`                         | Build complet : assets 3D (`build:designs`) **puis** site (`build:web`) |
-| `npm run build:designs`                 | Régénère STL + blueprint + `catalog.json` dans `apps/web/public/`       |
-| `npm run build:web`                     | Build de production de l'app (`apps/web/dist`)                          |
-| `npm run preview`                       | Prévisualise le build de production                                     |
-| `npm test` / `npm run test:watch`       | Tests unitaires/composants (Vitest + Testing Library)                   |
-| `npm run test:cov`                      | Tests unitaires avec couverture (Vitest + v8)                           |
-| `npm run test:e2e` / `test:e2e:ui`      | Tests d'intégration end-to-end (Playwright)                             |
-| `npm run typecheck`                     | Vérification de types (`tsc -b`)                                        |
-| `npm run lint` / `lint:fix`             | ESLint                                                                  |
-| `npm run format` / `format:check`       | Prettier                                                                |
-| `npm run check`                         | Gate complet : format:check + lint + typecheck + test                   |
-| `npm run storybook` / `build-storybook` | Storybook (composants)                                                  |
-| `npm run clean`                         | Supprime builds, caches et assets générés                               |
-| `npm run clean:all`                     | + `node_modules`                                                        |
+| Commande                                | Effet                                                                       |
+| --------------------------------------- | --------------------------------------------------------------------------- |
+| `npm run dev`                           | Serveur de dev Vite (HMR)                                                   |
+| `npm run build`                         | Build complet : assets 3D (`build:designs`) **puis** `tsc -b && vite build` |
+| `npm run build:designs`                 | Régénère STL + blueprint + `catalog.json` dans `public/`                    |
+| `npm run preview`                       | Prévisualise le build de production                                         |
+| `npm test` / `npm run test:watch`       | Tests unitaires/composants (Vitest + Testing Library)                       |
+| `npm run test:cov`                      | Tests unitaires avec couverture (Vitest + v8)                               |
+| `npm run test:e2e` / `test:e2e:ui`      | Tests d'intégration end-to-end (Playwright)                                 |
+| `npm run typecheck`                     | Vérification de types (`tsc -b`)                                            |
+| `npm run lint` / `lint:fix`             | ESLint                                                                      |
+| `npm run format` / `format:check`       | Prettier                                                                    |
+| `npm run check`                         | Gate complet : format:check + lint + typecheck + test                       |
+| `npm run storybook` / `build-storybook` | Storybook (composants)                                                      |
+| `npm run clean`                         | Supprime builds, caches, assets générés **et** `node_modules`               |
+| `npm run clean:dist`                    | Idem **sans** `node_modules`                                                |
 
 ## Ajouter une nouvelle pièce
 
@@ -80,10 +80,10 @@ npm install
 ## Déploiement (GitHub Pages)
 
 - Le workflow `.github/workflows/deploy.yml` régénère les assets 3D **en CI** puis publie
-  `apps/web/dist` sur Pages (`base` Vite = `/3DExperiment/`).
+  `dist` sur Pages (`base` Vite = `/3DExperiment/`).
 - Activer Pages : _Settings → Pages → Source = GitHub Actions_.
 - Le nom du dépôt doit être **`3DExperiment`** (sinon ajuster `base` dans
-  `apps/web/vite.config.ts`).
+  `vite.config.ts`).
 
 ## Détails de la pièce de référence
 

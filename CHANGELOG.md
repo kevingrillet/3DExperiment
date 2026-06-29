@@ -5,6 +5,23 @@ Toutes les évolutions notables de ce projet sont consignées dans ce fichier.
 Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
 et le projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
+## [1.1.0] — 2026-06-29
+
+### Modifié
+
+- **Abandon du monorepo npm workspaces au profit d'un paquet unique**, aligné sur la
+  structure du socle [NodeTemplate](https://github.com/kevingrillet/NodeTemplate).
+  L'app web remonte de `apps/web/` vers la racine (`src/`, `index.html`, `vite.config.ts`,
+  `tsconfig*.json`, `.storybook/`…), le générateur passe de `packages/generator/src/`
+  à `scripts/generator/`, et les assets générés sont désormais écrits dans `public/`
+  (au lieu de `apps/web/public/`).
+- **`package.json` unique** : fusion des dépendances, suppression du champ `workspaces`,
+  `openscad-wasm` reclassé en `devDependency` (outil de build, jamais embarqué).
+- **Nettoyage via `rimraf`** (`clean` / `clean:dist`) à la place du script maison
+  `scripts/clean.mjs` (supprimé), pour aligner la sémantique sur les autres projets.
+- Mise à jour de `deploy.yml` (artefact `dist`), `dependabot.yml` (une seule entrée npm)
+  et de la documentation.
+
 ## [1.0.0] — 2026-06-26
 
 Première version : site **statique** de partage de pièces 3D imprimables (blueprint

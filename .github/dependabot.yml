@@ -1,0 +1,12 @@
+version: 2
+updates:
+  # Dépendances npm — paquet unique à la racine (app web + outillage + generator).
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+  # Actions GitHub utilisées par les workflows
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'

@@ -2,8 +2,8 @@
 **/storybook-static/**
 **/coverage/**
 **/node_modules/**
-apps/web/public/designs/**
-apps/web/public/catalog.json
+public/designs/**
+public/catalog.json
 package-lock.json
 *.stl
 *.svg

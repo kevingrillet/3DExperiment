@@ -3,12 +3,12 @@
 //  Orchestrateur de build des pièces 3D.
 //
 //  Pour chaque dossier designs/<id>/ contenant un design.json :
-//    1. compile model.scad  -> apps/web/public/designs/<id>/model.stl
-//    2. exécute blueprint.mjs -> apps/web/public/designs/<id>/blueprint.svg
-//    3. copie les photos      -> apps/web/public/designs/<id>/photos/*
-//  Puis écrit le catalogue   -> apps/web/public/catalog.json
+//    1. compile model.scad  -> public/designs/<id>/model.stl
+//    2. exécute blueprint.mjs -> public/designs/<id>/blueprint.svg
+//    3. copie les photos      -> public/designs/<id>/photos/*
+//  Puis écrit le catalogue   -> public/catalog.json
 //
-//  Les assets de apps/web/public/designs sont GÉNÉRÉS (gitignorés) :
+//  Les assets de public/designs sont GÉNÉRÉS (gitignorés) :
 //  régénérés localement (`npm run build:designs`) et en CI.
 // =====================================================================
 import fs from 'node:fs';
@@ -18,9 +18,10 @@ import { fileURLToPath } from 'node:url';
 import { scadToStl } from './stl.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '../../..');
+// scripts/generator/ -> racine du projet (deux niveaux au-dessus).
+const ROOT = path.resolve(__dirname, '../..');
 const DESIGNS_DIR = path.join(ROOT, 'designs');
-const PUBLIC_DIR = path.join(ROOT, 'apps', 'web', 'public');
+const PUBLIC_DIR = path.join(ROOT, 'public');
 const OUT_DESIGNS = path.join(PUBLIC_DIR, 'designs');
 
 /** @returns {string[]} ids des designs (dossiers contenant design.json) */

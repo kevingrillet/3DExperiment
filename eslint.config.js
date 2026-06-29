@@ -1,4 +1,4 @@
-// Configuration ESLint « flat » à la racine du monorepo.
+// Configuration ESLint « flat » du projet.
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -16,12 +16,12 @@ export default tseslint.config(
       '**/playwright-report/**',
       '**/test-results/**',
       '**/node_modules/**',
-      'apps/web/public/designs/**',
+      'public/designs/**',
     ],
   },
-  // App web : TypeScript + React (navigateur)
+  // App web + configs TS (navigateur) : TypeScript + React
   {
-    files: ['apps/web/**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     languageOptions: {
       ecmaVersion: 2022,
@@ -37,9 +37,9 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
-  // Scripts Node (generator, designs, scripts racine) + tests Playwright (e2e)
+  // Scripts Node (generator, designs, utilitaires)
   {
-    files: ['packages/**/*.mjs', 'designs/**/*.mjs', 'scripts/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'designs/**/*.mjs'],
     extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2022,
