@@ -8,6 +8,7 @@
     "node": ">=24"
   },
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
     "dev": "vite",
     "build": "npm run build:designs && tsc -b && vite build",
     "build:designs": "node scripts/generator/build.mjs",
