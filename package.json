@@ -1,6 +1,6 @@
 {
   "name": "3dexperiment",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "description": "Partage de pièces 3D imprimables : blueprint coté + viewer 3D interactif (designs OpenSCAD + app web React).",

@@ -5,6 +5,25 @@ Toutes les évolutions notables de ce projet sont consignées dans ce fichier.
 Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
 et le projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
+## [1.1.1] — 2026-07-01
+
+Version d'outillage et de documentation : hooks Git versionnés, normalisation des
+fins de ligne et migration de la documentation agents. Aucun changement fonctionnel.
+
+### Ajouté
+
+- **Hooks Git versionnés** (`.githooks/`, activés automatiquement par le script npm
+  `prepare` à chaque `npm install`) : `commit-msg` (sujet conforme Conventional
+  Commits), `pre-commit` (`npm run check`) et `pre-push` (`test:e2e` +
+  `build-storybook`, parité CI).
+
+### Modifié
+
+- **Fins de ligne normalisées en LF** via `.gitattributes` (`eol=lf`).
+- **Documentation agents migrée vers `AGENTS.md`** (ex-`CLAUDE.md`) ; `CLAUDE.md` et
+  `.github/copilot-instructions.md` ne sont plus que des renvois vers `AGENTS.md`.
+  Ajout de références Claude Code et du garde-fou `--no-verify`.
+
 ## [1.1.0] — 2026-06-29
 
 ### Modifié
