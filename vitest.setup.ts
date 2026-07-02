@@ -39,9 +39,13 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
 
 // Langue déterministe : on force le français (sinon la langue du navigateur jsdom,
 // "en-US", ferait basculer l'app en anglais et casserait les assertions).
-Object.defineProperty(window.navigator, 'language', { value: 'fr-FR', configurable: true });
+// Garde `window` : les tests du generator tournent en environnement `node`
+// (`// @vitest-environment node`), où `window` n'existe pas.
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window.navigator, 'language', { value: 'fr-FR', configurable: true });
+}
 
 afterEach(() => {
   cleanup();
-  window.localStorage.clear();
+  if (typeof window !== 'undefined') window.localStorage.clear();
 });
