@@ -34,7 +34,7 @@ export function App() {
           </Routes>
         </main>
 
-        <footer className="border-t border-line bg-surface py-4 text-center text-sm text-faint">
+        <footer className="border-t border-line bg-surface py-4 text-center text-sm text-muted">
           {t('app.footer')}
         </footer>
       </div>
