@@ -5,6 +5,51 @@ Toutes les évolutions notables de ce projet sont consignées dans ce fichier.
 Le format s'inspire de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
 et le projet suit le [versionnage sémantique](https://semver.org/lang/fr/).
 
+## [1.2.0] — 2026-07-02
+
+Renforcement qualité/tests et fiabilisation du pipeline de génération, aligné sur
+les patterns transverses du socle [NodeTemplate](https://github.com/kevingrillet/NodeTemplate).
+
+### Ajouté
+
+- **Couverture de tests** : script `test:cov` désormais dans la CI (résumé publié
+  dans le job + artefact `coverage/`), reporters `text`/`text-summary`/`json-summary`/`lcov`
+  et **seuils** dans `vite.config.ts` (lines/functions/statements 80 %, branches 75 % ;
+  la couverture réelle est bien au-dessus).
+- **Tests du generator** (auparavant sans aucun test) : `scripts/generator/*.test.mjs`
+  (env `node`, inclus dans le run Vitest). `build.test.mjs` mocke `openscad-wasm` et vérifie
+  sur un dossier temporaire la production d'un STL non vide, la structure de `catalog.json`,
+  la copie des photos et la construction des URLs ; `validate.test.mjs` couvre la validation
+  de schéma ; `blueprint-sync.test.mjs` garde la cohérence des cotes (voir ci-dessous).
+- **Validation de schéma de `design.json`** (`scripts/generator/validate.mjs`, validation
+  **maison typée**, zéro dépendance runtime) : champs requis, types, présence des deux
+  langues (`{ fr, en }`) sur les textes localisés. Un `design.json` invalide fait
+  **échouer bruyamment** le build avec un message clair. Une **photo déclarée mais absente
+  du disque** provoque désormais un **WARNING bruyant** (fin du skip silencieux).
+- **Garde-fou de synchronisation `blueprint.mjs` ↔ `model.scad`** : test de cohérence des
+  cotes numériques dupliquées à la main (détecte toute dérive), préféré à un snapshot SVG
+  (moins bruyant). Contrainte documentée dans `AGENTS.md` (§ Ajouter une pièce).
+- **Tests d'accessibilité unitaires** : convention `*.a11y.test.tsx` + helper
+  `src/test/a11y.tsx` (`renderA11y` sous contextes i18n + thème) pour `ThemeToggle`,
+  `LanguageSwitcher` et `ViewerControls` (rôles/noms accessibles, ARIA, clavier).
+- **Accessibilité e2e** : `@axe-core/playwright` dans le smoke Playwright (échec seulement
+  sur les violations `serious`/`critical`).
+- **Lighthouse CI** : `@lhci/cli` + `lighthouserc.json` (accessibilité bloquante ≥ 0,9, le
+  reste en `warn`) et workflow `.github/workflows/lighthouse.yml`. Le site étant servi sous
+  `/3DExperiment/`, lhci démarre `vite preview` (`startServerCommand`) au lieu de
+  `staticDistDir`. `.lighthouseci/` gitignoré et nettoyé par `clean`/`clean:dist`.
+- **Stories Storybook** des composants composites du viewer : `DesignViewer`, `StlViewer`
+  (minimale, WebGL), `BlueprintViewer`, `SourceViewer`, `PhotoGallery`.
+- **Guide « Ajouter une pièce »** pas-à-pas dans `AGENTS.md` (dossier `designs/<id>/`,
+  `model.scad`, `design.json`, `blueprint.mjs` optionnel, photos, sorties de `build.mjs`).
+
+### Modifié
+
+- **Contraste du pied de page** corrigé (`text-faint` → `text-muted`) pour respecter le
+  seuil AA (4,5:1) détecté par le scan axe-core.
+- **`scripts/generator/build.mjs`** rendu importable/testable : fonctions exportées et
+  exécution de `main()` gardée par un test `isMain` (comme `stl.mjs`).
+
 ## [1.1.1] — 2026-07-01
 
 Version d'outillage et de documentation : hooks Git versionnés, normalisation des

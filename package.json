@@ -1,6 +1,6 @@
 {
   "name": "3dexperiment",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "Partage de pièces 3D imprimables : blueprint coté + viewer 3D interactif (designs OpenSCAD + app web React).",
@@ -25,8 +25,8 @@
     "format:check": "prettier --check .",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "clean": "rimraf dist node_modules coverage storybook-static playwright-report .vite test-results public/designs public/catalog.json",
-    "clean:dist": "rimraf dist coverage storybook-static playwright-report .vite test-results public/designs public/catalog.json",
+    "clean": "rimraf dist node_modules coverage storybook-static playwright-report .vite test-results .lighthouseci public/designs public/catalog.json",
+    "clean:dist": "rimraf dist coverage storybook-static playwright-report .vite test-results .lighthouseci public/designs public/catalog.json",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test"
   },
   "dependencies": {
@@ -38,7 +38,9 @@
     "three": "^0.185.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/react": "^10.4.6",
