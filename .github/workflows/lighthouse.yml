@@ -1,0 +1,35 @@
+name: Lighthouse CI
+
+# Audit de qualité web (performance, accessibilité, best-practices, SEO) via
+# @lhci/cli. Comme le site est servi sous le sous-chemin `/3DExperiment/`, on
+# n'utilise PAS `staticDistDir` (qui sert à la racine) : lhci démarre `vite preview`
+# (`startServerCommand`) et audite l'URL réelle, exactement comme en production.
+# Les budgets vivent dans `lighthouserc.json` : seule l'accessibilité est bloquante
+# (`error`), le reste est en `warn` pour ne pas rendre la CI fragile aux variations.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (designs + web)
+        run: npm run build
+
+      - name: Lighthouse CI (collect + assert)
+        run: npx lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
